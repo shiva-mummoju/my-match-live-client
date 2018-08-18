@@ -58,7 +58,7 @@ class Start extends Component {
 
 
   startNewMatch = () => {
-    console.log("start new match clicked");
+    // console.log("start new match clicked");
     axios.post("api/create" , this.state.newmatch).then((res) => {
       console.log("Match created successfully",res.data._id);
       this.setState({match_id : res.data._id});
@@ -68,15 +68,10 @@ class Start extends Component {
     });
 
     
-  };
+  }; 
 
   resumeMatch = () => {
-    axios.get("api/getmatch/" + this.state.requestedMatchId).then((res) => {
-      console.log("resuming match" , res.data._id);
-      this.props.history.push("/console" ,res.data );
-    } , (err) => {
-      console.log("error in getting match " , err);
-    });
+    this.props.history.push("/console?id="   + this.state.requestedMatchId);
   };
 
 

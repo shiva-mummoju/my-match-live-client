@@ -35,6 +35,8 @@ class Teams extends Component {
     document.getElementById("20").value = "player 9";
     document.getElementById("21").value = "player 10";
     document.getElementById("22").value = "player 11";
+    document.getElementById("overs").value = 10;
+    document.getElementById("toss").value = 1;
   };
 
   updateAllTheNames = () => {
@@ -63,6 +65,8 @@ class Teams extends Component {
     newmatch.team2Players[8].playerName = document.getElementById("20").value;
     newmatch.team2Players[9].playerName = document.getElementById("21").value;
     newmatch.team2Players[10].playerName = document.getElementById("22").value;
+    newmatch.maxOvers = document.getElementById("overs").value;
+    newmatch.toss = document.getElementById("toss").value;
     this.setState({ newmatch: newmatch });
   };
 
@@ -72,7 +76,7 @@ class Teams extends Component {
       .post("api/update", this.state.newmatch)
       .then(res => {
         console.log(res.data);
-        this.props.history.push("/console", this.state.newmatch);
+        this.props.history.push("/console?id=" + this.state.newmatch._id);
       })
       .catch(err => {
         console.log(err);
@@ -115,7 +119,12 @@ class Teams extends Component {
         <input type="text" id="20" placeholder="enter player 9 name" />
         <input type="text" id="21" placeholder="enter player 10 name" />
         <input type="text" id="22" placeholder="enter player 11 name" />
+        <h1>Overs</h1>
+        <input type="number" id="overs" placeholder="Enter the overs of the match" />
         <br />
+        <h1>Toss</h1>
+        <input type="number" id="toss" placeholder="toss" />
+        <br/>
         <button className="btn btn-primary" onClick={this.startMatch}>
           Start the match
         </button>

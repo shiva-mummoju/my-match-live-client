@@ -1,0 +1,93 @@
+.main {
+    height: 100% !important;
+    min-height: 100vh !important;
+    min-width: 100vw !important;
+    width: 100% !important;
+    background-color: lightseagreen;
+}
+
+.scorecard {
+    background-color: lightgray;
+    padding: 10px;
+    -webkit-box-shadow: -1px 4px 55px 1px rgba(115, 115, 115, 1);
+    -moz-box-shadow: -1px 4px 55px 1px rgba(115, 115, 115, 1);
+    box-shadow: -1px 4px 55px 1px rgba(115, 115, 115, 1);
+    border: 1px solid darkgray;
+}
+
+.mainscore-score {
+    font-size: 2.8rem;
+    padding: 10px 10px 5px 10px;
+    font-weight: bold;
+}
+
+.mainscore-score span {
+    font-size: 1.5rem;
+}
+
+.innings {
+    padding: 0px 10px 10px 10px;
+}
+
+.batsman {
+    font-weight: bold;
+    padding: 10px;
+    background-color: darkgrey;
+}
+
+.bowler {
+    padding: 10px;
+    background-color: darkgrey;
+    font-weight: bold;
+}
+
+.striker {
+    padding: 10px;
+}
+
+.bowlerstats {
+    padding: 10px;
+}
+
+.options {
+    margin-top: 10px;
+    padding: 5px;
+    /* border: 1px solid darkgray; */
+}
+
+.option {
+    border: 1px solid darkgrey;
+    height: 100%;
+    background-color: burlywood;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+}
+
+.info {
+    padding: 10px 10px 10px 25px;
+    font-weight: bold;
+    background-color: darkgrey;
+}
+
+.ballDesc {
+    height: 10rem;
+    width: 100%;
+}
+
+.sendButton {
+    height: 100%;
+    width: auto;
+    background-color: burlywood;
+    text-align: center;
+    color: black;
+    height: 10rem;
+    padding: 3rem;
+    font-size: 2rem;
+    cursor: pointer;
+    /* margin: 10px; */
+    margin-right: 10px;
+    margin-left: -10px;
+}

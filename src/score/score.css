@@ -1,0 +1,19 @@
+.break {
+    margin-top: 10px;
+}
+
+.oneball {
+    /* padding: 10px; */
+    margin: 10px;
+    /* border-bottom: 1px solid darkgray; */
+}
+
+.oneballdesc {
+    background-color: darkgrey;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.over {
+    font-weight: bold;
+}

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-
 import axios from "./../axios-config";
 import { ClipLoader } from "react-spinners";
-
 import "./home.css";
 
 class Home extends Component {
@@ -12,6 +10,7 @@ class Home extends Component {
       loading: false
     };
   }
+
 
   setLoading = val => {
     this.setState({ loading: val });
@@ -24,10 +23,12 @@ class Home extends Component {
 
   onViewMatchClicked = () => {
     console.log("View match clicked");
-    axios.get("api/getmatch/" + document.getElementById("matchid").value).then((res) => {
-      console.log(res);
-      this.props.history.push("/score" , res.data);
-    })
+    // axios.get("api/getmatch/" + document.getElementById("matchid").value).then((res) => {
+    //   console.log(res);
+    //   this.props.history.push("/score" , res.data);
+    // })
+
+    this.props.history.push("/score?id=" +  document.getElementById("matchid").value);
     
   };
 
