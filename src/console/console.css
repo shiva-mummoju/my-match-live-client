@@ -1,7 +1,7 @@
 .main {
     height: 100% !important;
     min-height: 100vh !important;
-    min-width: 100vw !important;
+    /* min-width: 100vw !important; */
     width: 100% !important;
     background-color: lightseagreen;
 }
@@ -90,4 +90,47 @@
     /* margin: 10px; */
     margin-right: 10px;
     margin-left: -10px;
+}
+
+.mymodal {
+    background-color: darkgray;
+    color: black;
+    /* width: 50vw; */
+    /* height: 30rem; */
+    width: 50rem;
+    padding: 0px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.modalHeader {
+    color: black;
+    padding: 10px;
+    font-size: 2.5rem;
+}
+
+.modalLink {
+    color: blue;
+    /* background-color: lightgray; */
+    padding: 10px;
+    width: 100%;
+    /* margin-left: 10px; */
+    /* margin-right: 10px; */
+}
+
+.matchLink {
+    background-color: lightgray;
+    padding: 1.5rem;
+}
+
+.modalCopy {
+    padding: 10px;
+}
+
+.nopadding {
+    padding: 0px !important;
+}
+
+.nomargin {
+    margin: 0px !important;
 }

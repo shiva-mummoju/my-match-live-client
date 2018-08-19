@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "./../axios-config";
+import Header from "./../components/header";
 
 
 class Start extends Component {
@@ -84,14 +85,36 @@ class Start extends Component {
   render() {
     return (
       <div>
-        <h1>Host a match</h1>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <input type="text"   onChange={this.matchIdChanged} value={this.state.requestedMatchId}  placeholder="Enter match id" />
+        <Header/>
+        <div className="row home_main">
+          <div className="row home_one">
+            <div className="col-lg-3 col-sm-2 col-xs-1 " />
+            <div className="col-lg-6 col-sm-8 col-xs-10  home_one_content">
+              <div className="row home_one_content_one">
+                <div className="col-lg-12 col-sm-12 col-xs-12  view_match">RESUME MATCH</div>
+                <div className="col-lg-12 col-sm-12 col-xs-12 form-group">
+                <input type="text"  className="matchid" onChange={this.matchIdChanged} value={this.state.requestedMatchId}  placeholder="Enter match id" />
+                </div>
+                <div className="col-lg-12 col-sm-12 col-xs-12 ">
+                  <button
+                    className="btn btn-primary viewButton"
+                    onClick={this.resumeMatch}
+                  >
+                    Resume Match
+                  </button>
+                </div>
+              </div>
+              <div className="row home_one_content_two">
+                <div className="col-lg-12 col-sm-12 col-xs-12  host_match">START NEW MATCH</div>
+                <div className="col-lg-12 col-sm-12 col-xs-12 ">
+                  <button  className="btn btn-primary viewButton bring_down" onClick={this.startNewMatch}>START</button>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-3 col-sm-2 col-xs-1 " />
+          </div>
+        </div>
+        {/* <input type="text"   onChange={this.matchIdChanged} value={this.state.requestedMatchId}  placeholder="Enter match id" />
         <button className="btn btn-primary" onClick={this.resumeMatch} >
           resume match
         </button>
@@ -99,7 +122,7 @@ class Start extends Component {
         <br />
         <button className="btn btn-primary" onClick={this.startNewMatch}>
           Start new match
-        </button>
+        </button> */}
       </div>
     );
   }

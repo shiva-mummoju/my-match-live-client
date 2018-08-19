@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "./../axios-config";
+import Header from "./../components/header";
+import "./teams.css";
 
 class Teams extends Component {
   constructor(props) {
@@ -86,48 +88,128 @@ class Teams extends Component {
   render() {
     return (
       <div>
-        <h1>Enter the team names</h1>
+        <Header/>
+        <div className="row mainTeamDetails" >
+    <div className="row">
+        <div className="col-lg-12 col-xs-12  ">
+            <div className="matchdetails">ENTER DETAILS OF THE MATCH</div>
+        </div>
+    </div>
+    <div className="row">
+        <div className="col-lg-6 col-sm-6 col-xs-12  teamDetailsCol ">
+        <div className="teamdetails">
+            <div className="row">
+                <div className="col-lg-12 col-xs-12  teamname">TEAM 1 NAME</div>
+                <div className="col-lg-12 col-xs-12   ">
+                    <input type="text"  className="teamname_input" id="team1"  placeholder="enter team 1 name" />
+                </div>
+            </div>
+            <div className="row players">
+            <div className="col-lg-12 col-xs-12  teamname">PLAYER NAMES    </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="1" placeholder="enter player 1 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="2" placeholder="enter player 2 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="3" placeholder="enter player 3 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text"  className="playername_input" id="4" placeholder="enter player 4 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="5" placeholder="enter player 5 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="6" placeholder="enter player 6 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="7" placeholder="enter player 7 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text"  className="playername_input" id="8" placeholder="enter player 8 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text"  className="playername_input" id="9" placeholder="enter player 9 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="10" placeholder="enter player 10 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="11" placeholder="enter player 11 name" />
+                </div>
+            </div>
+        </div></div>
 
-        <br />
-        <br />
-        <br />
-        <h1>Team 1</h1>
-        <input type="text" id="team1" placeholder="enter team 1 name" />
-        <br />
-        <input type="text" id="1" placeholder="enter player 1 name" />
-        <input type="text" id="2" placeholder="enter player 2 name" />
-        <input type="text" id="3" placeholder="enter player 3 name" />
-        <input type="text" id="4" placeholder="enter player 4 name" />
-        <input type="text" id="5" placeholder="enter player 5 name" />
-        <input type="text" id="6" placeholder="enter player 6 name" />
-        <input type="text" id="7" placeholder="enter player 7 name" />
-        <input type="text" id="8" placeholder="enter player 8 name" />
-        <input type="text" id="9" placeholder="enter player 9 name" />
-        <input type="text" id="10" placeholder="enter player 10 name" />
-        <input type="text" id="11" placeholder="enter player 11 name" />
-        <h1>Team 2 </h1>
-        <input type="text" id="team2" placeholder="enter team 2 name" />
-        <br />
-        <input type="text" id="12" placeholder="enter player 1 name" />
-        <input type="text" id="13" placeholder="enter player 2 name" />
-        <input type="text" id="14" placeholder="enter player 3 name" />
-        <input type="text" id="15" placeholder="enter player 4 name" />
-        <input type="text" id="16" placeholder="enter player 5 name" />
-        <input type="text" id="17" placeholder="enter player 6 name" />
-        <input type="text" id="18" placeholder="enter player 7 name" />
-        <input type="text" id="19" placeholder="enter player 8 name" />
-        <input type="text" id="20" placeholder="enter player 9 name" />
-        <input type="text" id="21" placeholder="enter player 10 name" />
-        <input type="text" id="22" placeholder="enter player 11 name" />
-        <h1>Overs</h1>
-        <input type="number" id="overs" placeholder="Enter the overs of the match" />
-        <br />
-        <h1>Toss</h1>
-        <input type="number" id="toss" placeholder="toss" />
-        <br/>
-        <button className="btn btn-primary" onClick={this.startMatch}>
-          Start the match
-        </button>
+        <div className="col-lg-6 col-sm-6  col-xs-12  teamDetailsCol">
+        <div className="teamdetails">
+            <div className="row">
+                <div className="col-lg-12 col-xs-12  teamname">TEAM 2 NAME</div>
+                <div className="col-lg-12 col-xs-12   ">
+                    <input type="text" className="teamname_input" id="team2" placeholder="enter team 2 name" />
+                </div>
+            </div>
+            <div className="row players">
+              <div className="col-lg-12 col-xs-12  teamname">PLAYER NAMES    </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="12" placeholder="enter player 1 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="13" placeholder="enter player 2 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text"  className="playername_input"  id="14" placeholder="enter player 3 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="15" placeholder="enter player 4 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="16" placeholder="enter player 5 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="17" placeholder="enter player 6 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="18" placeholder="enter player 7 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="19" placeholder="enter player 8 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="20" placeholder="enter player 9 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="21" placeholder="enter player 10 name" />
+                </div>
+                <div className="col-lg-12 col-xs-12  player">
+                    <input type="text" className="playername_input"  id="22" placeholder="enter player 11 name" />
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div className="row overs_element">
+        <div className="col-lg-12 col-xs-12  teamname overs_heading">Overs</div>
+        <div className="col-lg-12 col-xs-12  ">
+            <input type="number" className="overs_input" id="overs" placeholder="Enter the overs of the match" />
+        </div>
+    </div>
+    <div className="row overs_element">
+        <div className="col-lg-12 col-xs-12  teamname toss_element">Who bats first?</div>
+        <div className="col-lg-12 col-xs-12  ">
+            <input type="number" className="overs_input" id="toss" placeholder="toss" />
+        </div>
+    </div>
+    <div className="row">
+        <div className="col-lg-12 col-xs-12  startMatchButtonElement">
+            <button className="btn btn-primary startMatchButton" onClick={this.startMatch}>
+                Start the match
+            </button>
+        </div>
+    </div>
+</div>
+
       </div>
     );
   }

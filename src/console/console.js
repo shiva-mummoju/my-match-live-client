@@ -3,10 +3,50 @@ import openSocket from "socket.io-client";
 import queryString from "query-string";
 import axios from "./../axios-config";
 import Header from "./../components/header";
-
+import Modal from "react-modal";
 import "./console.css";
 
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    padding: "0px",
+    transform: "translate(-50%, -50%)"
+  }
+};
+Modal.setAppElement("#root");
+
 class Console extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalIsOpen: false,
+      copyMessage: "click to copy",
+      matchLink: "Currently Not available"
+    };
+
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal() {
+    this.setState({ modalIsOpen: true });
+    console.log("open modal called");
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false, copyMessage: "click to copy" });
+  }
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // this.subtitle.style.color = '#f00';
+  }
+
   socket = null;
 
   ballNumber = 1;
@@ -15,7 +55,10 @@ class Console extends Component {
     var params = queryString.parse(this.props.location.search);
 
     axios.get("api/getmatch/" + params.id).then(res => {
-      this.setState({ match: res.data });
+      this.setState({
+        match: res.data,
+        matchLink: "http://localhost:3000/score?id=" + res.data._id
+      });
       this.socket = openSocket("http://localhost:5000");
       this.socket.on("connect", () => {
         this.socket.emit("join", this.state.match._id, err => {
@@ -54,10 +97,41 @@ class Console extends Component {
     }
   };
 
+  shareLink = () => {
+    var textField = document.createElement("textarea");
+    textField.innerText = this.state.matchLink;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+    this.setState({ copyMessage: "message has been copied" });
+  };
+
   render() {
     return (
       <div>
         <Header />
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+          contentLabel="Match Modal"
+        >
+          <div className="mymodal" onClick={this.shareLink}>
+            <div className="row modalHeader nomargin">
+              <div className="col-lg-12 ">Share this with your friends</div>
+            </div>
+            <div className="row modalLink  nomargin">
+              <div className="col-lg-12 matchLink" id="matchLinkElement">
+                {this.state.matchLink}
+              </div>
+            </div>
+            <div className="row modalCopy nomargin">
+              <div className="col-lg-12 ">{this.state.copyMessage}</div>
+            </div>
+          </div>
+        </Modal>
         <div className="main">
           <div className="row ">
             <div className="col-lg-3 col-sm-3" />
@@ -72,10 +146,7 @@ class Console extends Component {
                     >
                       Stats
                     </button>
-                    <button
-                      className="btn btn-info"
-                      onClick={this.onStatsClicked}
-                    >
+                    <button className="btn btn-info" onClick={this.openModal}>
                       Share
                     </button>
                   </div>
@@ -174,7 +245,7 @@ class Console extends Component {
               <div className="col-lg-12  ">
                 <div className="row oneballdesc ">Live Updates</div>
 
-                {this.state &&
+                {this.state.match &&
                   this.state.match.balls.map((ball, id) => {
                     return (
                       <div className="row oneball " key={id}>

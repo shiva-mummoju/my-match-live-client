@@ -34,3 +34,12 @@
 .App {
   text-align: center;
 }
+
+body{
+  background-color: lightseagreen !important;
+}
+
+.row{
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}

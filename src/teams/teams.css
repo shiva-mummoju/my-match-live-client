@@ -1,0 +1,65 @@
+.mainTeamDetails{
+    text-align: center;
+    align-content: center;
+    /* background-color: lightgray; */
+}
+
+.matchdetails{
+    font-size: 3rem;
+    padding: 1rem;
+    font-weight: bold;
+}
+
+.teamdetails{
+    background-color: lightgray;
+    padding :5rem;
+    /* margin: 3rem; */
+    /* width: 100%; */
+}
+/*  */
+
+.teamname{
+    padding: 1rem;
+    background-color: darkgray;
+    color: white;
+}
+
+.teamname_input{
+    width: 100%;
+    padding: 1rem;
+    margin: 0px 1rem 1rem 0px;
+    text-align: center;
+}
+
+
+.playername_input{
+    width: 100%;
+    padding: 1rem;
+    margin: 0px 1rem 0px 0px;
+    text-align: center;
+}
+
+.overs_element{
+    margin-top: 1rem;
+    background-color: lightgray;
+}
+
+.overs_input{
+    width: 33.3%;
+    padding: 1rem;
+    text-align: center;
+    margin: 1rem;
+}
+.startMatchButtonElement{
+    margin-top: 1rem;
+    margin-bottom: 1rem !important;
+    background-color: lightgray;
+}
+
+
+.startMatchButton{
+    width: 33.3%;
+    margin: 1rem;
+    margin-bottom: 1rem !important;
+    height: 5rem;
+}
