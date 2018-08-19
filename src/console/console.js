@@ -6,6 +6,10 @@ import Header from "./../components/header";
 import Modal from "react-modal";
 import "./console.css";
 
+
+// var baseURL = "http://localhost:5000";
+var baseURL = "https://rocky-brook-58200.herokuapp.com";
+
 const customStyles = {
   content: {
     top: "50%",
@@ -57,9 +61,9 @@ class Console extends Component {
     axios.get("api/getmatch/" + params.id).then(res => {
       this.setState({
         match: res.data,
-        matchLink: "http://localhost:3000/score?id=" + res.data._id
+        matchLink: baseURL + "/score?id=" + res.data._id
       });
-      this.socket = openSocket("http://localhost:5000");
+      this.socket = openSocket(baseURL);
       this.socket.on("connect", () => {
         this.socket.emit("join", this.state.match._id, err => {
           console.log(this.state);
