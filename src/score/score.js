@@ -5,9 +5,8 @@ import queryString from "query-string";
 import axios from "./../axios-config";
 import Header from "./../components/header";
 import "./score.css";
+import env from "./../environments";
 
-// var baseURL = "http://localhost:5000";
-var baseURL = "https://rocky-brook-58200.herokuapp.com";
 
 class Score extends Component {
   socketView = null;
@@ -21,7 +20,7 @@ class Score extends Component {
       console.log(res);
       this.setState({ match: res.data });
 
-      this.socket = openSocket(baseURL);
+      this.socket = openSocket(env.serverURL);
       this.socket.on("connect", () => {
         console.log("connected to server");
 
