@@ -134,3 +134,8 @@
 .nomargin {
     margin: 0px !important;
 }
+
+.blue{
+    background-color: darkblue !important;
+    color: white !important;
+}
