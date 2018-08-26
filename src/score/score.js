@@ -164,7 +164,7 @@ class Score extends Component {
             <div className="col-lg-3 col-sm-2  col-xs-1" />
           </div>
         </div>
-        <ToastContainer />
+        
       </div>
     );
   }
