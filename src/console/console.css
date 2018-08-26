@@ -139,3 +139,17 @@
     background-color: darkblue !important;
     color: white !important;
 }
+
+.bowlerSelect{
+    padding: 5px;
+}
+
+.bowlerSelect:hover{
+    background-color: darkblue;
+    color: white;
+}
+
+.bowlerSelectTitle{
+    background-color: darkgray;
+    padding: 5px;
+}

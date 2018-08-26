@@ -11,6 +11,8 @@ import Start from "./start/start";
 import Stats from "./stats/stats";
 import Toss from "./toss/toss";
 import Teams from "./teams/teams";
+// import {ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
   render() {

@@ -13,62 +13,85 @@ class Teams extends Component {
     var newmatch = this.state.newmatch;
     newmatch._id = this.state.match_id;
     this.setState({ newmatch: newmatch });
-    document.getElementById("team1").value = "team 1";
-    document.getElementById("team2").value = "team 2";
-    document.getElementById("1").value = "player 1";
-    document.getElementById("2").value = "player 2";
-    document.getElementById("3").value = "player 3";
-    document.getElementById("4").value = "player 4";
-    document.getElementById("5").value = "player 5";
-    document.getElementById("6").value = "player 6";
-    document.getElementById("7").value = "player 7";
-    document.getElementById("8").value = "player 8";
-    document.getElementById("9").value = "player 9";
-    document.getElementById("10").value = "player 10";
-    document.getElementById("11").value = "player 11";
-    document.getElementById("12").value = "player 1";
-    document.getElementById("13").value = "player 2";
-    document.getElementById("14").value = "player 3";
-    document.getElementById("15").value = "player 4";
-    document.getElementById("16").value = "player 5";
-    document.getElementById("17").value = "player 6";
-    document.getElementById("18").value = "player 7";
-    document.getElementById("19").value = "player 8";
-    document.getElementById("20").value = "player 9";
-    document.getElementById("21").value = "player 10";
-    document.getElementById("22").value = "player 11";
+    document.getElementById("team1").value = "team1";
+    document.getElementById("team2").value = "team2";
+    document.getElementById("1").value = "player1";
+    document.getElementById("2").value = "player2";
+    document.getElementById("3").value = "player3";
+    document.getElementById("4").value = "player4";
+    document.getElementById("5").value = "player5";
+    document.getElementById("6").value = "player6";
+    document.getElementById("7").value = "player7";
+    document.getElementById("8").value = "player8";
+    document.getElementById("9").value = "player9";
+    document.getElementById("10").value = "player10";
+    document.getElementById("11").value = "player11";
+    document.getElementById("12").value = "player1";
+    document.getElementById("13").value = "player2";
+    document.getElementById("14").value = "player3";
+    document.getElementById("15").value = "player4";
+    document.getElementById("16").value = "player5";
+    document.getElementById("17").value = "player6";
+    document.getElementById("18").value = "player7";
+    document.getElementById("19").value = "player8";
+    document.getElementById("20").value = "player9";
+    document.getElementById("21").value = "player10";
+    document.getElementById("22").value = "player11";
     document.getElementById("overs").value = 10;
-    document.getElementById("toss").value = 1;
+    document.getElementById("toss").value = 0;
   };
 
   updateAllTheNames = () => {
     var newmatch = this.state.newmatch;
-    newmatch.team1Name = document.getElementById("team1").value;
-    newmatch.team2Name = document.getElementById("team2").value;
-    newmatch.team1Players[0].playerName = document.getElementById("1").value;
-    newmatch.team1Players[1].playerName = document.getElementById("2").value;
-    newmatch.team1Players[2].playerName = document.getElementById("3").value;
-    newmatch.team1Players[3].playerName = document.getElementById("4").value;
-    newmatch.team1Players[4].playerName = document.getElementById("5").value;
-    newmatch.team1Players[5].playerName = document.getElementById("6").value;
-    newmatch.team1Players[6].playerName = document.getElementById("7").value;
-    newmatch.team1Players[7].playerName = document.getElementById("8").value;
-    newmatch.team1Players[8].playerName = document.getElementById("9").value;
-    newmatch.team1Players[9].playerName = document.getElementById("10").value;
-    newmatch.team1Players[10].playerName = document.getElementById("11").value;
-    newmatch.team2Players[0].playerName = document.getElementById("12").value;
-    newmatch.team2Players[1].playerName = document.getElementById("13").value;
-    newmatch.team2Players[2].playerName = document.getElementById("14").value;
-    newmatch.team2Players[3].playerName = document.getElementById("15").value;
-    newmatch.team2Players[4].playerName = document.getElementById("16").value;
-    newmatch.team2Players[5].playerName = document.getElementById("17").value;
-    newmatch.team2Players[6].playerName = document.getElementById("18").value;
-    newmatch.team2Players[7].playerName = document.getElementById("19").value;
-    newmatch.team2Players[8].playerName = document.getElementById("20").value;
-    newmatch.team2Players[9].playerName = document.getElementById("21").value;
-    newmatch.team2Players[10].playerName = document.getElementById("22").value;
-    newmatch.maxOvers = document.getElementById("overs").value;
+    newmatch.team[0].name = document.getElementById("team1").value;
+    newmatch.team[1].name = document.getElementById("team2").value;
+    newmatch.team[0].players[0].playerName = document.getElementById("1").value;
+    newmatch.team[0].players[1].playerName = document.getElementById("2").value;
+    newmatch.team[0].players[2].playerName = document.getElementById("3").value;
+    newmatch.team[0].players[3].playerName = document.getElementById("4").value;
+    newmatch.team[0].players[4].playerName = document.getElementById("5").value;
+    newmatch.team[0].players[5].playerName = document.getElementById("6").value;
+    newmatch.team[0].players[6].playerName = document.getElementById("7").value;
+    newmatch.team[0].players[7].playerName = document.getElementById("8").value;
+    newmatch.team[0].players[8].playerName = document.getElementById("9").value;
+    newmatch.team[0].players[9].playerName = document.getElementById("10").value;
+    newmatch.team[0].players[10].playerName = document.getElementById("11").value;
+    newmatch.team[1].players[0].playerName = document.getElementById("12").value;
+    newmatch.team[1].players[1].playerName = document.getElementById("13").value;
+    newmatch.team[1].players[2].playerName = document.getElementById("14").value;
+    newmatch.team[1].players[3].playerName = document.getElementById("15").value;
+    newmatch.team[1].players[4].playerName = document.getElementById("16").value;
+    newmatch.team[1].players[5].playerName = document.getElementById("17").value;
+    newmatch.team[1].players[6].playerName = document.getElementById("18").value;
+    newmatch.team[1].players[7].playerName = document.getElementById("19").value;
+    newmatch.team[1].players[8].playerName = document.getElementById("20").value;
+    newmatch.team[1].players[9].playerName = document.getElementById("21").value;
+    newmatch.team[1].players[10].playerName = document.getElementById("22").value;
+    newmatch.maxBalls = parseInt(document.getElementById("overs").value , 10) * 6;
     newmatch.toss = document.getElementById("toss").value;
+    newmatch.currentBatting = newmatch.toss;
+    newmatch.team[0].wickets = 0;
+    newmatch.team[1].wickets = 0;
+    newmatch.team[0].currentStriker = 0;
+    newmatch.team[0].currentNonStriker = 1;
+    newmatch.team[0].currentBowler = 10;
+    newmatch.team[1].currentBowler = 10;
+    newmatch.team[1].currentStriker = 0;
+    newmatch.team[1].currentNonStriker = 1;
+    newmatch.team[0].preBowler = -1;
+    newmatch.team[1].preBowler = -1;
+    if(newmatch.currentBatting === 1){
+        newmatch.currentBowling = 0;
+    }else
+    newmatch.currentBowling = 1;
+
+
+    if(newmatch.toss === 0){
+        newmatch.status = "Team 0 has won the choice and are batting first!"
+    }else{
+        newmatch.status = "Team 1 has won the choice and are batting first!"
+    }
+
     this.setState({ newmatch: newmatch });
   };
 
