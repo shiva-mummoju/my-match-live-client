@@ -11,12 +11,7 @@ import env from "./../environments";
 class Score extends Component {
   socketView = null;
 
-  constructor(props){
-    super(props);
-    this.state = {
-      match: {}
-    }
-  }
+ 
 
   componentDidMount = () => {
     // this.setState({match: this.props.location.state});
@@ -25,7 +20,7 @@ class Score extends Component {
     var params = queryString.parse(this.props.location.search);
     axios.get("api/getmatch/" + params.id).then(res => {
       console.log(res);
-      this.setState({ match: res.data });
+      this.setState({ match: res.data  });
 
       this.socket = openSocket(env.serverURL);
       this.socket.on("connect", () => {
@@ -89,7 +84,7 @@ class Score extends Component {
                       (this.state && this.state.match) ? Math.floor(this.state.match.team[this.state.match.currentBatting].ballsPlayed /6 ): "NA"
                     }.{
                       (this.state && this.state.match) ? this.state.match.team[this.state.match.currentBatting].ballsPlayed %6 : "NA"
-                    }) <br className="visible-xs"/>Rr: {this.state.match ? ((this.state.match.team[this.state.match.currentBatting].score /this.state.match.team[this.state.match.currentBatting].ballsPlayed)*6).toFixed(2) : '' } </span>
+                    }) <br className="visible-xs"/>Rr: {(this.state && this.state.match) ? ((this.state.match.team[this.state.match.currentBatting].score /this.state.match.team[this.state.match.currentBatting].ballsPlayed)*6).toFixed(2) : '' } </span>
                     
                     <button
                       className="btn btn-info"
@@ -98,7 +93,7 @@ class Score extends Component {
                       Stats
                     </button>
                   </div>
-                  <div className="row innings">{this.state.match? this.state.match.status : ""}</div>
+                  <div className="row innings">{(this.state && this.state.match)? this.state.match.status : ""}</div>
                 </div>
               </div>
               <div className="row batsman ">
@@ -140,7 +135,7 @@ class Score extends Component {
               </div>
               <div className="row bowlerstats ">
                 <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].playerName: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? Math.floor(this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled / 6): ""}.{this.state.match?this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled % 6: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? Math.floor(this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled / 6): ""}.{(this.state && this.state.match)?this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled % 6: ""}</div>
                 <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].maidens: ""}</div>
                 <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].runsGiven: ""}</div>
                 <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].wickets: ""}</div>
