@@ -11,6 +11,13 @@ import env from "./../environments";
 class Score extends Component {
   socketView = null;
 
+  constructor(props){
+    super(props);
+    this.state = {
+      match: {}
+    }
+  }
+
   componentDidMount = () => {
     // this.setState({match: this.props.location.state});
     // console.log("props inside the score" , this.props);
@@ -71,17 +78,17 @@ class Score extends Component {
                 <div className="col-lg-12 col-sm-12  col-xs-12 nopadding">
                   <div className="row mainscore-score ">
                     {
-                     this.state.match ? this.state.match.team[this.state.match.currentBatting].name : "NA"
+                     (this.state && this.state.match) ? this.state.match.team[this.state.match.currentBatting].name : "NA"
                     }  &nbsp;
                     {
-                      this.state.match ? this.state.match.team[this.state.match.currentBatting].score : "NA"
+                      (this.state && this.state.match) ? this.state.match.team[this.state.match.currentBatting].score : "NA"
                     }/ 
                     {
-                      this.state.match ? this.state.match.team[this.state.match.currentBatting].wickets : "NA"
+                      (this.state && this.state.match) ? this.state.match.team[this.state.match.currentBatting].wickets : "NA"
                     }   <span> ({
-                      this.state.match ? Math.floor(this.state.match.team[this.state.match.currentBatting].ballsPlayed /6 ): "NA"
+                      (this.state && this.state.match) ? Math.floor(this.state.match.team[this.state.match.currentBatting].ballsPlayed /6 ): "NA"
                     }.{
-                      this.state.match ? this.state.match.team[this.state.match.currentBatting].ballsPlayed %6 : "NA"
+                      (this.state && this.state.match) ? this.state.match.team[this.state.match.currentBatting].ballsPlayed %6 : "NA"
                     }) <br className="visible-xs"/>Rr: {this.state.match ? ((this.state.match.team[this.state.match.currentBatting].score /this.state.match.team[this.state.match.currentBatting].ballsPlayed)*6).toFixed(2) : '' } </span>
                     
                     <button
@@ -105,22 +112,22 @@ class Score extends Component {
                 <div className="col-lg-2 col-sm-2  col-xs-2 nopadding">sr</div>
               </div>
               <div className="row striker onlyTopPadding">
-                <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].playerName: ""}* &nbsp; 
+                <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].playerName: ""}* &nbsp; 
 
                 </div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].runsScored: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].ballsFaced: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].fours: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].sixes: ""}</div>
-                <div className="col-lg-2 col-sm-2  col-xs-2 onlyTopPadding">{this.state.match? (this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].runsScored / this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].ballsFaced * 100).toFixed(2) : "" }</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].runsScored: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].ballsFaced: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].fours: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].sixes: ""}</div>
+                <div className="col-lg-2 col-sm-2  col-xs-2 onlyTopPadding">{(this.state && this.state.match)? (this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].runsScored / this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].ballsFaced * 100).toFixed(2) : "" }</div>
               </div>
               <div className="row striker onlyTopPadding">
-                <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].playerName: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].runsScored: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].ballsFaced: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].fours: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].sixes: ""}</div>
-                <div className="col-lg-2 col-sm-2  col-xs-2 onlyTopPadding">{this.state.match? (this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].runsScored / this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].ballsFaced * 100).toFixed(2) : "" }</div>
+                <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].playerName: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].runsScored: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].ballsFaced: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].fours: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].sixes: ""}</div>
+                <div className="col-lg-2 col-sm-2  col-xs-2 onlyTopPadding">{(this.state && this.state.match)? (this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].runsScored / this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].ballsFaced * 100).toFixed(2) : "" }</div>
               </div>
               <div className="row bowler">
                 <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">BOWLER &nbsp;
@@ -132,11 +139,11 @@ class Score extends Component {
                 <div className="col-lg-2 col-sm-2  col-xs-2 onlyTopPadding">Eco</div>
               </div>
               <div className="row bowlerstats ">
-                <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].playerName: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? Math.floor(this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled / 6): ""}.{this.state.match?this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled % 6: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].maidens: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].runsGiven: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].wickets: ""}</div>
+                <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].playerName: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? Math.floor(this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled / 6): ""}.{this.state.match?this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled % 6: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].maidens: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].runsGiven: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{(this.state && this.state.match)? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].wickets: ""}</div>
                 <div className="col-lg-2 col-sm-2  col-xs-2 onlyTopPadding">0</div>
               </div>
               
@@ -150,7 +157,7 @@ class Score extends Component {
               <div className="col-lg-12   col-xs-12 nopadding ">
                 <div className="row oneballdesc ">Live Updates</div>
 
-                {this.state.match &&
+                {(this.state && this.state.match) && 
                   this.state.match.balls.map((ball, id) => {
                     return (
                       <div className="row oneball " key={id}>
