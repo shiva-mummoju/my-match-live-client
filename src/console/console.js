@@ -143,13 +143,15 @@ class Console extends Component {
           toast.success("team batting first has won the match", toasterConfig);
         }
         return;
-      } else {
+      }else {
+        // genuine case of winning the match
         if (this.state.match.team[this.state.match.currentBatting].score > this.state.match.team[this.state.match.currentBowling].score) {
-          toast.success("team batting second has won the match", toasterConfig);
+          toast.success(this.state.match.team[this.state.match.currentBatting].name + " has won the match!", toasterConfig);
+          // status = this.state.match.team[this.state.match.currentBowling].name + " has won the match!";
           return;
+
         }
       }
-
     }
 
 
@@ -298,7 +300,7 @@ class Console extends Component {
     // equal to 10 or not
     // this is for the case when the first batting 
     if (this.state.match.toss === this.state.match.currentBatting) {
-      if (this.state.match.team[this.state.match.currentBatting].wickets >= 10) {
+      if (this.state.match.team[this.state.match.currentBatting].wickets >= 10 || this.state.match.team[this.state.match.currentBatting].ballsPlayed >= this.state.match.maxBalls) {
         toast.error("The innings is over. Second innings is going to begin!", toasterConfig);
         // exchanging the current batting and current bowling
         temp = match.currentBatting;
@@ -320,35 +322,59 @@ class Console extends Component {
     }
 
     if (this.state.match.toss !== this.state.match.currentBatting) {
-      // we are in the second innings
+      var status;
+      // we are in the second innings. hence we should check for the result of the match
       if (this.state.match.team[this.state.match.currentBatting].wickets >= 10 || this.state.match.team[this.state.match.currentBatting].ballsPlayed >= this.state.match.maxBalls) {
         // the innings is over due to wickets
         // check for runs and declare winner
-        console.log(this.state.match.team[this.state.match.currentBatting].wickets)
+        console.log(this.state.match.team[this.state.match.currentBatting].wickets);
         if (this.state.match.team[this.state.match.currentBatting].score > this.state.match.team[this.state.match.currentBowling].score) {
           // secnd team batting has won!
-          toast.success("team batting second has won the match", toasterConfig);
+          toast.success(this.state.match.team[this.state.match.currentBatting].name + " has won the match!", toasterConfig);
+          status = this.state.match.team[this.state.match.currentBatting].name + " has won the match!";
         } else {
           // .first team batting has won the match.
-          toast.success("team batting first has won the match", toasterConfig);
+          toast.success(this.state.match.team[this.state.match.currentBowling].name + " has won the match!", toasterConfig);
+          status = this.state.match.team[this.state.match.currentBowling].name + " has won the match!";
         }
+        var m2 = this.state.match;
+        m2.status = status;
+        this.setState({
+          match: m2
+        });
+        this.socket.emit("ball", this.state.match);
         this.matchStack.push(JSON.parse(JSON.stringify(this.state.match)));
         if (this.matchStack.length > 20) {
           this.matchStack.shift();
         }
-
         return;
       } else {
+        // genuine case of winning the match
         if (this.state.match.team[this.state.match.currentBatting].score > this.state.match.team[this.state.match.currentBowling].score) {
-          toast.success("team batting second has won the match", toasterConfig);
+          toast.success(this.state.match.team[this.state.match.currentBatting].name + " has won the match!", toasterConfig);
+          status = this.state.match.team[this.state.match.currentBatting].name + " has won the match!";
+          var m3 = this.state.match;
+          m3.status = status;
+          this.setState({
+            match: m3
+          });
+          this.socket.emit("ball", this.state.match);
           this.matchStack.push(JSON.parse(JSON.stringify(this.state.match)));
           if (this.matchStack.length > 20) {
             this.matchStack.shift();
           }
           return;
+
         }
       }
-
+      // writing code to change the status of the second innings
+      status = this.state.match.team[this.state.match.currentBatting].name + " need more " + (this.state.match.team[this.state.match.currentBowling].score - this.state.match.team[this.state.match.currentBatting].score + 1) + " runs in " + (this.state.match.maxBalls - this.state.match.team[this.state.match.currentBatting].ballsPlayed) + " balls to win!";
+      var m1 = this.state.match;
+      m1.status = status;
+      this.setState({
+        match: m1
+      });
+      this.socket.emit("ball", this.state.match);
     }
 
 
@@ -394,9 +420,9 @@ class Console extends Component {
   getButtonClasses(num){
     var cla = "";
     if(!this.state.button[num]){
-      cla = "col-lg-1 col-sm-1  col-xs-1 option";
+      cla = "option";
     }else{
-      cla = "col-lg-1 col-sm-1  col-xs-1 option blue";
+      cla = "option blue";
     }
     return cla;
   }
@@ -404,9 +430,9 @@ class Console extends Component {
   getExtraClasses(num){
     var cla = "";
     if(!this.state.extra[num]){
-      cla = "col-lg-1 col-sm-1  col-xs-1 option";
+      cla = " option";
     }else{
-      cla = "col-lg-1 col-sm-1  col-xs-1 option blue";
+      cla = " option blue";
     }
     return cla;
   }
@@ -525,17 +551,17 @@ class Console extends Component {
           style={customStyles}
           contentLabel="Match Modal"
         >
-          <div className="mymodal" onClick={this.shareLink}>
+          <div className="row col-lg-12 col-sm-12 col-xs-12  mymodal" onClick={this.shareLink}>
             <div className="row modalHeader nomargin">
-              <div className="col-lg-12 ">Share this with your friends</div>
+              <div className="col-lg-12 col-sm-12 col-xs-12 ">Link to Match</div>
             </div>
             <div className="row modalLink  nomargin">
-              <div className="col-lg-12 matchLink" id="matchLinkElement">
+              <div className="col-lg-12 col-sm-12 col-xs-12  matchLink" id="matchLinkElement">
                 {this.state.matchLink}
               </div>
             </div>
             <div className="row modalCopy nomargin">
-              <div className="col-lg-12 ">{this.state.copyMessage}</div>
+              <div className="col-lg-12  col-sm-12 col-xs-12 ">{this.state.copyMessage}</div>
             </div>
           </div>
         </Modal>
@@ -547,14 +573,14 @@ class Console extends Component {
           style={customStyles}
           contentLabel="Bowler Modal"
         >
-          <div className="mymodal" onClick={this.shareLink}>
+          <div className="mymodal row col-lg-12 col-sm-12 col-xs-12 " onClick={this.shareLink}>
             <div className="row modalHeader nomargin">
-              <div className="col-lg-12 ">Choose the next bowler</div>
+              <div className="col-lg-12 col-sm-12 col-xs-12 ">Choose next bowler</div>
             </div>
             <div className="row modalLink  nomargin">
-              <div className="col-lg-12 matchLink" id="matchLinkElement">
+              <div className="col-lg-12 col-sm-12 col-xs-12 matchLink" id="matchLinkElement">
               <div  className="row bowlerSelectTitle" >
-                      <div className="col-xs-8">Name</div>
+                      <div className="col-lg-8  col-sm-6 col-xs-4 ">Name</div>
                       <div className="col-xs-1" >O</div>
                       <div className="col-xs-1" >M</div>
                       <div className="col-xs-1" >R</div>
@@ -564,7 +590,7 @@ class Console extends Component {
                   this.state.match && this.state.match.team[this.state.match.currentBowling].players.map((player , id) => {
                     return (
                       <div key={id} className="row bowlerSelect" onClick={() => {this.selectThisBowler(id)}}>
-                      <div className="col-xs-8">{player.playerName}</div>
+                      <div className="col-lg-8  col-sm-6 col-xs-4 ">{player.playerName}</div>
                       <div className="col-xs-1" >{Math.floor(player.ballsBowled / 6)}.{player.ballsBowled % 6 }</div>
                       <div className="col-xs-1" >{player.maidens}</div>
                       <div className="col-xs-1" >{player.runsGiven}</div>
@@ -586,12 +612,12 @@ class Console extends Component {
           style={customStyles}
           contentLabel="Bowler Modal"
         >
-          <div className="mymodal" >
+          <div className="mymodal row col-lg-12  col-sm-12 col-xs-12 " >
             <div className="row modalHeader nomargin">
-              <div className="col-lg-12 ">Choose the Batsman</div>
+              <div className="col-lg-12  col-sm-12 col-xs-12 ">Choose the Batsman</div>
             </div>
             <div className="row modalLink  nomargin">
-              <div className="col-lg-12 matchLink" id="matchLinkElement">
+              <div className="col-lg-12  col-sm-12 col-xs-12 matchLink" id="matchLinkElement">
               <div  className="row bowlerSelectTitle" >
                       <div className="col-xs-6">Name</div>
                       <div className="col-xs-2" >O</div>
@@ -620,10 +646,10 @@ class Console extends Component {
         </Modal>
         <div className="main">
           <div className="row ">
-            <div className="col-lg-3 col-sm-3 col-xs-1" />
-            <div className="col-lg-6 col-sm-6 col-xs-10 scorecard">
+            <div className="col-lg-3 col-sm-2 col-xs-1" />
+            <div className="col-lg-6 col-sm-8 col-xs-10 scorecard">
               <div className="row mainscore ">
-                <div className="col-lg-12 col-sm-12  col-xs-12">
+                <div className="col-lg-12 col-sm-12  col-xs-12 nopadding">
                   <div className="row mainscore-score ">
                     {
                      this.state.match ? this.state.match.team[this.state.match.currentBatting].name : "NA"
@@ -633,80 +659,86 @@ class Console extends Component {
                     }/ 
                     {
                       this.state.match ? this.state.match.team[this.state.match.currentBatting].wickets : "NA"
-                    } <span> ({
+                    }   <span> ({
                       this.state.match ? Math.floor(this.state.match.team[this.state.match.currentBatting].ballsPlayed /6 ): "NA"
                     }.{
                       this.state.match ? this.state.match.team[this.state.match.currentBatting].ballsPlayed %6 : "NA"
-                    }) Rr: {this.state.match ? ((this.state.match.team[this.state.match.currentBatting].score /this.state.match.team[this.state.match.currentBatting].ballsPlayed)*6).toFixed(2) : '' } </span>
+                    }) <br className="visible-xs"/>Rr: {this.state.match ? ((this.state.match.team[this.state.match.currentBatting].score /this.state.match.team[this.state.match.currentBatting].ballsPlayed)*6).toFixed(2) : '' } </span>
+                    
                     <button
                       className="btn btn-info"
                       onClick={this.onStatsClicked}
                     >
                       Stats
-                    </button> &nbsp;
+                    </button>
                     <button className="btn btn-info" onClick={this.openModal}>
                       Share
                     </button>
                   </div>
-                  <div className="row innings">{this.state.match? this.state.match.team[this.state.match.toss].name : "NA"} won the toss and chose to bat</div>
+                  <div className="row innings">{this.state.match? this.state.match.status : ""}</div>
                 </div>
               </div>
               <div className="row batsman ">
-                <div className="col-lg-6 col-sm-6   col-xs-6">BATSMAN &nbsp; 
-                <button className="btn btn-info" onClick={this.changeStrike}>
-                      Change Strike
-                    </button>
+                <div className="col-lg-6 col-sm-6   col-xs-6 nopadding">BATSMAN &nbsp; 
+
                  </div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">R</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">B</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">4</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">6</div>
-                <div className="col-lg-2 col-sm-2  col-xs-2">sr</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 nopadding">R</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 nopadding">B</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 nopadding">4</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 nopadding">6</div>
+                <div className="col-lg-2 col-sm-2  col-xs-2 nopadding">sr</div>
               </div>
-              <div className="row striker">
-                <div className="col-lg-6 col-sm-6  col-xs-6">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].playerName: ""}* &nbsp; 
-                <button
-                      className="btn btn-info"
-                      onClick={this.openBatsmanModal}
-                    >
-                      Change
-                    </button>
+              <div className="row striker onlyTopPadding">
+                <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].playerName: ""}* &nbsp; 
+
                 </div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].runsScored: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].ballsFaced: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].fours: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].sixes: ""}</div>
-                <div className="col-lg-2 col-sm-2  col-xs-2">{this.state.match? (this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].runsScored / this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].ballsFaced * 100).toFixed(2) : "" }</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].runsScored: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].ballsFaced: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].fours: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].sixes: ""}</div>
+                <div className="col-lg-2 col-sm-2  col-xs-2 onlyTopPadding">{this.state.match? (this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].runsScored / this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentStriker].ballsFaced * 100).toFixed(2) : "" }</div>
               </div>
-              <div className="row striker ">
-                <div className="col-lg-6 col-sm-6  col-xs-6">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].playerName: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].runsScored: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].ballsFaced: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].fours: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].sixes: ""}</div>
-                <div className="col-lg-2 col-sm-2  col-xs-2">{this.state.match? (this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].runsScored / this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].ballsFaced * 100).toFixed(2) : "" }</div>
+              <div className="row striker onlyTopPadding">
+                <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].playerName: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].runsScored: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].ballsFaced: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].fours: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].sixes: ""}</div>
+                <div className="col-lg-2 col-sm-2  col-xs-2 onlyTopPadding">{this.state.match? (this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].runsScored / this.state.match.team[this.state.match.currentBatting].players[this.state.match.team[this.state.match.currentBatting].currentNonStriker].ballsFaced * 100).toFixed(2) : "" }</div>
               </div>
               <div className="row bowler">
-                <div className="col-lg-6 col-sm-6  col-xs-6">BOWLER &nbsp;
-                <button className="btn btn-info" onClick={this.openBowlerModal}>
-                      Change Bowler
-                    </button></div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">O</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">M</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">R</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">W</div>
-                <div className="col-lg-2 col-sm-2  col-xs-2">Eco</div>
+                <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">BOWLER &nbsp;
+                </div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">O</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">M</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">R</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">W</div>
+                <div className="col-lg-2 col-sm-2  col-xs-2 onlyTopPadding">Eco</div>
               </div>
               <div className="row bowlerstats ">
-                <div className="col-lg-6 col-sm-6  col-xs-6">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].playerName: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? Math.floor(this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled / 6): ""}.{this.state.match?this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled % 6: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].maidens: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].runsGiven: ""}</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].wickets: ""}</div>
-                <div className="col-lg-2 col-sm-2  col-xs-2">0</div>
+                <div className="col-lg-6 col-sm-6  col-xs-6 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].playerName: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? Math.floor(this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled / 6): ""}.{this.state.match?this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].ballsBowled % 6: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].maidens: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].runsGiven: ""}</div>
+                <div className="col-lg-1 col-sm-1  col-xs-1 onlyTopPadding">{this.state.match? this.state.match.team[this.state.match.currentBowling].players[this.state.match.team[this.state.match.currentBowling].currentBowler].wickets: ""}</div>
+                <div className="col-lg-2 col-sm-2  col-xs-2 onlyTopPadding">0</div>
               </div>
-
-              <div className="row info">OPTIONS</div>
+              <div className="row info">Options</div><br/>
+              <div className="row ">
+              <button className="col-lg-4 col-sm-4  col-xs-4 btn btn-info" onClick={this.changeStrike}>
+                      Strike
+                    </button>
+              <button
+                      className=" col-lg-4 col-sm-4  col-xs-4 btn btn-info"
+                      onClick={this.openBatsmanModal}
+                    >
+                      Batsman
+                    </button>
+              
+              <button className=" col-lg-4 col-sm-4  col-xs-4 btn btn-info" onClick={this.openBowlerModal}>
+                    Bowler
+                    </button>
+              </div>
 
               <div className="row  options">
                 <div className={this.getButtonClasses(0)}
@@ -737,13 +769,13 @@ class Console extends Component {
                 onClick={() => {this.extraButtonClicked(4)}}>RO</div>
                 <div className={this.getExtraClasses(5)}
                 onClick={() => {this.extraButtonClicked(5)}}>by</div>
-                <div className="col-lg-1 col-sm-1  col-xs-1 option"
+                <div className="option"
                 onClick={this.doUndo}
-                >U</div>
+                >Undo</div>
               </div>
 
               <div className="row msgbox ">
-                <div className="col-lg-10 col-sm-10  col-xs-10 msgbox-text  ">
+                <div className="col-lg-10 col-sm-10  col-xs-9 msgbox-text nopadding ">
                   <textarea
                     type="text"
                     id="desc"
@@ -752,34 +784,35 @@ class Console extends Component {
                   />
                 </div>
                 <div
-                  className="col-lg-2 col-sm-2  col-xs-2 sendButton"
+                  className="col-lg-2 col-sm-2  col-xs-3 sendButton  "
                   onClick={this.ballBowled}
+                  
                 >
                   Send
                 </div>
               </div>
             </div>
 
-            <div className="col-lg-3 col-sm-3 col-xs-1" />
+            <div className="col-lg-3 col-sm-2 col-xs-1" />
           </div>
           <div className="row break">
-            <div className="col-lg-3 col-sm-3  col-xs-  col-xs-1" />
-            <div className="col-lg-6 col-sm-6   col-xs-10 scorecard">
-              <div className="col-lg-12   col-xs-12 ">
+            <div className="col-lg-3 col-sm-2  col-xs-1" />
+            <div className="col-lg-6 col-sm-8   col-xs-10 scorecard ">
+              <div className="col-lg-12   col-xs-12 nopadding ">
                 <div className="row oneballdesc ">Live Updates</div>
 
                 {this.state.match &&
                   this.state.match.balls.map((ball, id) => {
                     return (
                       <div className="row oneball " key={id}>
-                        <div className="col-lg-1   col-xs-1 over">{ball.ballNumber}</div>
+                        <div className="col-lg-1   col-xs-1  over">{ball.ballNumber}</div>
                         <div className="col-lg-11   col-xs-11">{ball.ballDesc}</div>
                       </div>
                     );
                   })}
               </div>
             </div>
-            <div className="col-lg-3 col-sm-3  col-xs-3" />
+            <div className="col-lg-3 col-sm-2  col-xs-1" />
           </div>
         </div>
         <ToastContainer />

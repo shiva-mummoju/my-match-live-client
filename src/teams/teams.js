@@ -68,6 +68,7 @@ class Teams extends Component {
     newmatch.team[1].players[9].playerName = document.getElementById("21").value;
     newmatch.team[1].players[10].playerName = document.getElementById("22").value;
     newmatch.maxBalls = parseInt(document.getElementById("overs").value , 10) * 6;
+    console.log("starting a match with balls ", newmatch.maxBalls);
     newmatch.toss = document.getElementById("toss").value;
     newmatch.currentBatting = newmatch.toss;
     newmatch.team[0].wickets = 0;
