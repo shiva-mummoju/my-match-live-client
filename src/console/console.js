@@ -592,7 +592,7 @@ class Console extends Component {
             <div className="row modalLink  nomargin">
               <div className="col-lg-12 col-sm-12 col-xs-12 matchLink" id="matchLinkElement">
               <div  className="row bowlerSelectTitle" >
-                      <div className="col-lg-8  col-sm-6 col-xs-4 ">Name</div>
+                      <div className="col-lg-6  col-sm-6 col-xs-4 ">Name</div>
                       <div className="col-xs-1" >O</div>
                       <div className="col-xs-1" >M</div>
                       <div className="col-xs-1" >R</div>
@@ -602,7 +602,7 @@ class Console extends Component {
                   this.state.match && this.state.match.team[this.state.match.currentBowling].players.map((player , id) => {
                     return (
                       <div key={id} className="row bowlerSelect" onClick={() => {this.selectThisBowler(id)}}>
-                      <div className="col-lg-8  col-sm-6 col-xs-4 ">{player.playerName}</div>
+                      <div className="col-lg-6  col-sm-6 col-xs-4 ">{player.playerName}</div>
                       <div className="col-xs-1" >{player.maidens}</div>
                       <div className="col-xs-1" >{Math.floor(player.ballsBowled / 6)}.{player.ballsBowled % 6 }</div>
                       <div className="col-xs-1" >{player.runsGiven}</div>
