@@ -14,7 +14,7 @@ class Score extends Component {
   constructor(props){
     super(props);
 
-    state = {
+    this.state = {
       loading:false,
     }
   }
