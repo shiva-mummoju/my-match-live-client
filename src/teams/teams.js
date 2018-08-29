@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "./../axios-config";
 import Header from "./../components/header";
 import "./teams.css";
+import Loadable from "react-loading-overlay";
 
 class Teams extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class Teams extends Component {
   }
 
   componentDidMount = () => {
+      this.setState({loading: false});
     var newmatch = this.state.newmatch;
     newmatch._id = this.state.match_id;
     this.setState({ newmatch: newmatch });
@@ -97,20 +99,26 @@ class Teams extends Component {
   };
 
   startMatch = () => {
+      this.setState({loading: true});
     this.updateAllTheNames();
     axios
       .post("api/update", this.state.newmatch)
       .then(res => {
         console.log(res.data);
+        this.setState({loading:false});
         this.props.history.push("/console?id=" + this.state.newmatch._id);
       })
       .catch(err => {
+        this.setState({loading:false});
         console.log(err);
       });
   };
 
   render() {
     return (
+        <Loadable   active={this.state.loading}
+      spinner
+      text='Loading..'>
       <div>
         <Header/>
         <div className="row mainTeamDetails" >
@@ -220,7 +228,7 @@ class Teams extends Component {
         </div>
     </div>
     <div className="row overs_element">
-        <div className="col-lg-12 col-xs-12  teamname toss_element">Who bats first?</div>
+        <div className="col-lg-12 col-xs-12  teamname toss_element">Who bats first? Enter 0 for team1 and 1 for team2</div>
         <div className="col-lg-12 col-xs-12  ">
             <input type="number" className="overs_input" id="toss" placeholder="toss" />
         </div>
@@ -235,6 +243,9 @@ class Teams extends Component {
 </div>
 
       </div>
+      
+      
+      </Loadable>
     );
   }
 }

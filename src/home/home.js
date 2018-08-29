@@ -77,6 +77,29 @@ class Home extends Component {
             <div className="col-lg-3 col-sm-2 col-xs-1 " />
           </div>
         </div>
+        <div className="row home_main gap">
+          <div className="row home_one">
+            <div className="col-lg-3 col-sm-2 col-xs-1 " />
+            <div className="col-lg-6 col-sm-8 col-xs-10  home_one_content">
+              <div className="row home_one_content_two">
+                <div className="col-lg-12 col-sm-12 col-xs-12  host_match">Instructions</div>
+                <div>
+                <ul className="intro-list">
+                  <li>Click on view match if you want to view the live updates of any match by entering the ID of the match</li>
+                  <li>Select 'host' match if you want to start your own match or resume existing match</li>
+                  <li>To resume an exisiting match, you need the match-id</li>
+                  <li>To start new match, simply select 'start new match'</li>
+                  <li>You will be given the console where you can score the match ball by ball</li>
+                  <li>When the match is created, click on the share button which will provide you with the link to the match</li>
+                  <li>Share the link with your friends</li>
+                  <li>When your friends click on the link, they will be directed to the page where they will be getting ball by ball live updates of your cricket match </li>
+                </ul>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-3 col-sm-2 col-xs-1 " />
+          </div>
+        </div>
       </div>
     );
   }

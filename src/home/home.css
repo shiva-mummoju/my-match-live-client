@@ -28,7 +28,9 @@
     border: 1px solid darkgray;
 }
 
-
+.intro-list{
+    text-align: left;
+}
 
 .home_one_content_one{
     background-color: darkgray;
@@ -39,10 +41,18 @@
     font-size: 3rem;
     font-weight: bold;
     margin-top: 2rem;
+   
+}
+
+.gap{
+    margin-top: 2rem !important;
 }
 
 .viewButton{
     width: 100%;
+    padding: 4rem;
+    height: 6rem;
+    font-size: 3rem !important;
     /* margin: 10px; */
 }
 

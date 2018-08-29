@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from "./../axios-config";
 import Header from "./../components/header";
+import Loadable from "react-loading-overlay";
 
 
 class Start extends Component {
@@ -8,6 +9,7 @@ class Start extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       requestedMatchId : "",
       newmatch: {
         startedBy: 1,
@@ -70,19 +72,24 @@ class Start extends Component {
 
   startNewMatch = () => {
     // console.log("start new match clicked");
+    this.setState({loading:true});
     axios.post("api/create" , this.state.newmatch).then((res) => {
       console.log("Match created successfully",res.data._id);
-      this.setState({match_id : res.data._id});
+      this.setState({match_id : res.data._id , loading: false});
     this.props.history.push("/teams" , this.state);
     }).catch((err) => {
-      console.log("error has occurred" , err);
+      this.setState({loading: false});
+      window.alert("Some error has occurred. try again");
     });
 
     
   }; 
 
   resumeMatch = () => {
-    this.props.history.push("/console?id="   + this.state.requestedMatchId);
+    if(this.state.requestedMatchId){
+      this.props.history.push("/console?id="   + this.state.requestedMatchId);
+    }
+    
   };
 
 
@@ -94,8 +101,12 @@ class Start extends Component {
 
   render() {
     return (
+      <Loadable   active={this.state.loading}
+      spinner
+      text='Loading..'>
       <div>
         <Header/>
+
         <div className="row home_main">
           <div className="row home_one">
             <div className="col-lg-3 col-sm-2 col-xs-1 " />
@@ -134,6 +145,7 @@ class Start extends Component {
           Start new match
         </button> */}
       </div>
+      </Loadable>
     );
   }
 }
