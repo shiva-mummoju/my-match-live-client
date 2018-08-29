@@ -603,8 +603,8 @@ class Console extends Component {
                     return (
                       <div key={id} className="row bowlerSelect" onClick={() => {this.selectThisBowler(id)}}>
                       <div className="col-lg-8  col-sm-6 col-xs-4 ">{player.playerName}</div>
-                      <div className="col-xs-1" >{Math.floor(player.ballsBowled / 6)}.{player.ballsBowled % 6 }</div>
                       <div className="col-xs-1" >{player.maidens}</div>
+                      <div className="col-xs-1" >{Math.floor(player.ballsBowled / 6)}.{player.ballsBowled % 6 }</div>
                       <div className="col-xs-1" >{player.runsGiven}</div>
                       <div className="col-xs-1" >{player.wickets}</div>
                       </div>

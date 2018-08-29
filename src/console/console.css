@@ -106,8 +106,8 @@
     color: black;
     /* width: 50vw; */
     /* height: 30rem; */
-    width: 50rem;
-    padding: 0px;
+    /* width: 60rem; */
+    padding: 10px;
     border: 1px solid black;
     cursor: pointer;
 }
