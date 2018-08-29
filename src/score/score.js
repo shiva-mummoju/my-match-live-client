@@ -6,21 +6,27 @@ import axios from "./../axios-config";
 import Header from "./../components/header";
 import "./score.css";
 import env from "./../environments";
-
+import Loadable from "react-loading-overlay";
 
 class Score extends Component {
   socketView = null;
 
+  constructor(props){
+    super(props);
+
+    state = {
+      loading:false,
+    }
+  }
  
 
   componentDidMount = () => {
-    // this.setState({match: this.props.location.state});
-    // console.log("props inside the score" , this.props);
+    this.setState({loading: true});
 
     var params = queryString.parse(this.props.location.search);
     axios.get("api/getmatch/" + params.id).then(res => {
       console.log(res);
-      this.setState({ match: res.data  });
+      this.setState({ match: res.data ,  loading:false });
 
       this.socket = openSocket(env.serverURL);
       this.socket.on("connect", () => {
@@ -57,6 +63,10 @@ class Score extends Component {
 
   render() {
     return (
+
+      <Loadable   active={this.state.loading}
+      spinner
+      text='Loading..'>
       <div>
 
         <Header />
@@ -168,6 +178,8 @@ class Score extends Component {
         </div>
         
       </div>
+
+        </Loadable>
     );
   }
 }
