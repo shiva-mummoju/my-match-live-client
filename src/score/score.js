@@ -45,12 +45,15 @@ class Score extends Component {
         //   console.log("ball recieved", payload);
         this.setState({ match: payload });
       });
+    }).catch(err => {
+      window.alert("wrong match id");
+      this.props.history.goBack();
     });
   };
 
   onStatsClicked = () => {
     console.log("Going to the stats page");
-    this.props.history.push("/stats");
+    this.props.history.push("/stats" , this.state.match);
   };
 
   renderBalls = () => {
@@ -103,6 +106,7 @@ class Score extends Component {
                       Stats
                     </button>
                   </div>
+                  <div className="row innings">Match Id: {this.state.match? this.state.match._id : ""}</div>
                   <div className="row innings">{(this.state && this.state.match)? this.state.match.status : ""}</div>
                 </div>
               </div>

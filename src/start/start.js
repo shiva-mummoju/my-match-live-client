@@ -88,6 +88,8 @@ class Start extends Component {
   resumeMatch = () => {
     if(this.state.requestedMatchId){
       this.props.history.push("/console?id="   + this.state.requestedMatchId);
+    }else{
+      window.alert("enter match id");
     }
     
   };

@@ -27,10 +27,14 @@ class Home extends Component {
     //   console.log(res);
     //   this.props.history.push("/score" , res.data);
     // })
-
-    this.props.history.push(
-      "/score?id=" + document.getElementById("matchid").value
-    );
+if(document.getElementById("matchid").value !== ""){
+  this.props.history.push(
+    "/score?id=" + document.getElementById("matchid").value
+  );
+}else{
+  window.alert("Enter the match id");
+}
+    
   };
 
   testServerConnection = () => {
@@ -55,6 +59,7 @@ class Home extends Component {
                   <input
                     type="text"
                     className="matchid"
+                    id="matchid"
                     placeholder="enter the match id"
                   />
                 </div>

@@ -122,12 +122,15 @@ class Console extends Component {
           }
         });
       });
+    }).catch(err => {
+      window.alert("wrong match id");
+      this.props.history.goBack();
     });
   };
 
   onStatsClicked = () => {
     console.log("going to the stats page");
-    this.props.history.push("/stats");
+    this.props.history.push("/stats" , this.state.match);
   };
 
   ballBowled = () => {
@@ -684,6 +687,7 @@ class Console extends Component {
                       Share
                     </button>
                   </div>
+                  <div className="row innings">Match Id: {this.state.match? this.state.match._id : ""}</div>
                   <div className="row innings">{this.state.match? this.state.match.status : ""}</div>
                 </div>
               </div>
