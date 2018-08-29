@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import "./console.css";
 import env from "./../environments";
 import {ToastContainer, toast } from 'react-toastify';
+import Loadable from "react-loading-overlay";
 
 
 const customStyles = {
@@ -39,6 +40,7 @@ class Console extends Component {
 
     this.state = {
       modalIsOpen: false,
+      loading: false,
       copyMessage: "click to copy",
       matchLink: "Currently Not available",
       button :  [0,0,0,0,0,0,0,0],
@@ -98,9 +100,11 @@ class Console extends Component {
   socket = null;
   componentDidMount = () => {
     var params = queryString.parse(this.props.location.search);
-
+    this.setState({loading: true});
     axios.get("api/getmatch/" + params.id).then(res => {
+      
       this.setState({
+        loading: false,
         match: res.data,
         matchLink: env.clientURL + "score?id=" + res.data._id
       });
@@ -540,6 +544,11 @@ class Console extends Component {
 
   render() {
     return (
+
+
+      <Loadable   active={this.state.loading}
+      spinner
+      text='Loading..'>
       <div>
 
         <Header />
@@ -817,6 +826,8 @@ class Console extends Component {
         </div>
         <ToastContainer />
       </div>
+
+       </Loadable>
     );
   }
 }
